@@ -27,13 +27,22 @@ function init(){
 
 function makeCube(x, y, z){
     var geometry = new THREE.BoxGeometry( 1, 1, 1 );
-    var material = new THREE.MeshPhongMaterial( {color: "royalblue", shininess: 0, opacity: 0.8, transparent: true} );
+    var material = new THREE.MeshPhongMaterial( {color: "royalblue", shininess: 0} );
     cube = new THREE.Mesh( geometry, material );
     scene.add( cube );
-    cube.rotation.x = 0.4;
     cube.position.x = x;
     cube.position.y = y;
     cube.position.z = z;
+}
+
+function makeRubik(){
+    for(let i = -1; i < 2; i++){
+        for(let j = -1; j < 2; j++){
+            for(let k = -1; k < 2; k++){
+                makeCube(i, j, k);
+            }
+        }
+    }
 }
 
 function animate() {
@@ -47,6 +56,6 @@ init();
 
 camera.position.z = 5;
 
-makeCube(0, 0, 0); // Places cube in the center of screen
+makeRubik();
 
 animate();
