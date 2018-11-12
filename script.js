@@ -39,7 +39,7 @@ function makeRubik(){
     for(let i = -1; i < 2; i++){
         for(let j = -1; j < 2; j++){
             for(let k = -1; k < 2; k++){
-                makeCube(i, j, k);
+                makeCube(i * 1.05, j * 1.05, k * 1.05);
             }
         }
     }
