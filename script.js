@@ -6,11 +6,23 @@ document.body.appendChild( renderer.domElement );
 
 scene.background = new THREE.Color( 0xdadada );
 
-var light = new THREE.PointLight( 0xffffff, 1, 100 );
-light.position.set( 2, 2, 2 );
+var light = new THREE.PointLight( 0xffffff, 1, 20 );
+light.position.set( 0, 0, 5 );
+scene.add( light );
+light = new THREE.PointLight( 0xffffff, 0.5, 10 );
+light.position.set( 0, 5, 0 );
+scene.add( light );
+light = new THREE.PointLight( 0xffffff, 0.5, 10 );
+light.position.set( 0, -5, 0 );
+scene.add( light );
+light = new THREE.PointLight( 0xffffff, 0.5, 10 );
+light.position.set( 5, 0, 0 );
+scene.add( light );
+light = new THREE.PointLight( 0xffffff, 0.5, 10 );
+light.position.set( -5, 0, 0 );
 scene.add( light );
 var geometry = new THREE.BoxGeometry( 1, 1, 1 );
-var material = new THREE.MeshBasicMaterial( {color: "royalblue"} );
+var material = new THREE.MeshPhongMaterial( {color: "royalblue", shininess: 0, opacity: 0.8, transparent: true} );
 var cube = new THREE.Mesh( geometry, material );
 scene.add( cube );
 
