@@ -49,7 +49,7 @@ function makeRubik(){
 
 function paintCube(geometry){
     for ( var i = 0; i < geometry.faces.length; i += 2 ) {
-        var faceColor = new THREE.Color( 0xff0000 );
+        var faceColor = new THREE.Color( Math.random() * 0xffffff );
         geometry.faces[i].color = faceColor;
         geometry.faces[i+1].color = faceColor;
     }
