@@ -8,19 +8,19 @@ function init(){
 
     scene.background = new THREE.Color( 0xdadada );
 
-    var light = new THREE.PointLight( 0xffffff, 1, 20 );
+    var light = new THREE.PointLight( 0xffffff, 2, 20 );
     light.position.set( 0, 0, 5 );
     scene.add( light );
-    light = new THREE.PointLight( 0xffffff, 0.5, 10 );
+    light = new THREE.PointLight( 0xffffff, 1, 10 );
     light.position.set( 0, 5, 0 );
     scene.add( light );
-    light = new THREE.PointLight( 0xffffff, 0.5, 10 );
+    light = new THREE.PointLight( 0xffffff, 1, 10 );
     light.position.set( 0, -5, 0 );
     scene.add( light );
-    light = new THREE.PointLight( 0xffffff, 0.5, 10 );
+    light = new THREE.PointLight( 0xffffff, 1, 10 );
     light.position.set( 5, 0, 0 );
     scene.add( light );
-    light = new THREE.PointLight( 0xffffff, 0.5, 10 );
+    light = new THREE.PointLight( 0xffffff, 1, 10 );
     light.position.set( -5, 0, 0 );
     scene.add( light );
 }
@@ -28,6 +28,8 @@ function init(){
 function makeCube(x, y, z){
     var geometry = new THREE.BoxGeometry( 1, 1, 1 );
     var material = new THREE.MeshPhongMaterial( {color: "royalblue", shininess: 0} );
+    material.vertexColors = THREE.FaceColors;
+    geometry = paintCube(geometry);
     cube = new THREE.Mesh( geometry, material );
     scene.add( cube );
     cube.position.x = x;
@@ -43,6 +45,15 @@ function makeRubik(){
             }
         }
     }
+}
+
+function paintCube(geometry){
+    for ( var i = 0; i < geometry.faces.length; i += 2 ) {
+        var faceColor = new THREE.Color( 0xff0000 );
+        geometry.faces[i].color = faceColor;
+        geometry.faces[i+1].color = faceColor;
+    }
+    return geometry;
 }
 
 function animate() {
