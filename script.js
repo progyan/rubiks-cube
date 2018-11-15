@@ -1,14 +1,23 @@
-var scene = new THREE.Scene();
-var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 550 );
-var renderer = new THREE.WebGLRenderer();
-var cube;
+const CUBE_COLORS = [
+    new THREE.Color( "red" ),
+    new THREE.Color( "blue" ),
+    new THREE.Color( "white" ),
+    new THREE.Color( "orange" ),
+    new THREE.Color( "green" ),
+    new THREE.Color( "yellow" )
+];
+
+let scene = new THREE.Scene();
+let camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 550 );
+let renderer = new THREE.WebGLRenderer();
+
 function init(){
     renderer.setSize( window.innerWidth, window.innerHeight );
     document.body.appendChild( renderer.domElement );
 
     scene.background = new THREE.Color( 0xdadada );
 
-    var light = new THREE.PointLight( 0xffffff, 2, 20 );
+    let light = new THREE.PointLight( 0xffffff, 1.5, 20 );
     light.position.set( 0, 0, 5 );
     scene.add( light );
     light = new THREE.PointLight( 0xffffff, 1, 10 );
@@ -26,8 +35,8 @@ function init(){
 }
 
 function makeCube(x, y, z){
-    var geometry = new THREE.BoxGeometry( 1, 1, 1 );
-    var material = new THREE.MeshPhongMaterial( {color: "royalblue", shininess: 0} );
+    let geometry = new THREE.BoxGeometry( 1, 1, 1 );
+    let material = new THREE.MeshPhongMaterial( {color: "white", shininess: 0} );
     material.vertexColors = THREE.FaceColors;
     geometry = paintCube(geometry);
     cube = new THREE.Mesh( geometry, material );
@@ -35,6 +44,7 @@ function makeCube(x, y, z){
     cube.position.x = x;
     cube.position.y = y;
     cube.position.z = z;
+    return cube;
 }
 
 function makeRubik(){
@@ -48,16 +58,18 @@ function makeRubik(){
 }
 
 function paintCube(geometry){
-    for ( var i = 0; i < geometry.faces.length; i += 2 ) {
-        var faceColor = new THREE.Color( Math.random() * 0xffffff );
+    for ( let i = 0; i < geometry.faces.length; i += 2 ) {
+        let faceColor = CUBE_COLORS[i / 2];
         geometry.faces[i].color = faceColor;
         geometry.faces[i+1].color = faceColor;
+        console.log(faceColor);
     }
+    console.log(geometry.faces);
     return geometry;
 }
 
 function animate() {
-	requestAnimationFrame( animate );
+    requestAnimationFrame( animate );
     renderer.render( scene, camera );
 }
 
