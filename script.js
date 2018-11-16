@@ -1,10 +1,10 @@
 const CUBE_COLORS = [
-    new THREE.Color( "red" ),
-    new THREE.Color( "blue" ),
-    new THREE.Color( "white" ),
-    new THREE.Color( "orange" ),
-    new THREE.Color( "green" ),
-    new THREE.Color( "yellow" )
+    new THREE.Color( "red" ), // right
+    new THREE.Color( "orange" ), // left
+    new THREE.Color( "white" ), // top
+    new THREE.Color( "yellow" ), // down
+    new THREE.Color( "green" ), // front
+    new THREE.Color( "blue" ) // back
 ];
 
 let scene = new THREE.Scene();
