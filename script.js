@@ -73,7 +73,7 @@ function animate() {
     renderer.render( scene, camera );
 }
 
-// MAIN CODE //
+// MAIN CODE
 
 init();
 
