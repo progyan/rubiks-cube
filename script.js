@@ -3,7 +3,7 @@ const CUBE_COLORS = [
     new THREE.Color( "orange" ), // left
     new THREE.Color( "white" ), // top
     new THREE.Color( "yellow" ), // down
-    new THREE.Color( "green" ), // front
+    new THREE.Color( "teal" ), // front
     new THREE.Color( "blue" ) // back
 ];
 
