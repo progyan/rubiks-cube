@@ -97,7 +97,7 @@ function onMouseMove(evt) {
 }
 
 function onTouchMove(evt){
-    if (!mouseDown) {
+    if (!mouseDown || !evt.touches[1]) {
         return;
     }
 
