@@ -92,8 +92,8 @@ function onMouseMove(evt) {
         deltaY = evt.clientY - mouseY;
     mouseX = evt.clientX;
     mouseY = evt.clientY;
-    rubik.rotation.x += deltaY / 500;
-    rubik.rotation.y += deltaX / 500;
+    rubik.rotation.x += deltaY / 400;
+    rubik.rotation.y += deltaX / 400;
 }
 
 function onTouchMove(evt){
@@ -107,8 +107,8 @@ function onTouchMove(evt){
         deltaY = evt.touches[0].clientY - mouseY;
     mouseX = evt.touches[0].clientX;
     mouseY = evt.touches[0].clientY;
-    rubik.rotation.x += deltaY / 500;
-    rubik.rotation.y += deltaX / 500;
+    rubik.rotation.x += deltaY / 400;
+    rubik.rotation.y += deltaX / 400;
 }
 
 function onMouseDown(evt) {
@@ -116,7 +116,7 @@ function onMouseDown(evt) {
 
     mouseDown = true;
     mouseX = evt.clientX || evt.touches[0].clientX;
-    mouseY = evt.clientY || evt.touches[0].clientX;
+    mouseY = evt.clientY || evt.touches[0].clientY;
 }
 
 function onMouseUp(evt) {
