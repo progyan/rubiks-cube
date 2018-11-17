@@ -105,10 +105,15 @@ function onTouchMove(evt){
 
     let deltaX = evt.touches[0].clientX - mouseX,
         deltaY = evt.touches[0].clientY - mouseY;
+    if (rubik.rotation.x > Math.PI / 2 && rubik.rotation.x < Math.PI * 1.5)
+        deltaX *= -1;
     mouseX = evt.touches[0].clientX;
     mouseY = evt.touches[0].clientY;
     rubik.rotation.x += deltaY / 400;
     rubik.rotation.y += deltaX / 400;
+    console.log(rubik.rotation.x,  rubik.rotation.y);
+    rubik.rotation.x = (rubik.rotation.x + 2 * Math.PI) % (Math.PI * 2);
+    rubik.rotation.y = (rubik.rotation.y + 2 * Math.PI) % (Math.PI * 2);
 }
 
 function onMouseDown(evt) {
