@@ -131,7 +131,6 @@ class Mouser {
         this.mouseY = evt.touches[0].clientY;
         this.rubik.rotation.x += deltaY / 300;
         this.rubik.rotation.y += deltaX / 300;
-        console.log(this.rubik.rotation.x,  this.rubik.rotation.y);
         this.rubik.rotation.x = (rubik.rotation.x + 2 * Math.PI) % (Math.PI * 2);
         this.rubik.rotation.y = (rubik.rotation.y + 2 * Math.PI) % (Math.PI * 2);
     }
