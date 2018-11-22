@@ -7,161 +7,194 @@ const CUBE_COLORS = [
     new THREE.Color( 0x4169e1 ) // back
 ];
 
-let scene = new THREE.Scene();
-let camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 550 );
-let renderer = new THREE.WebGLRenderer();
-let canvas;
+class Game {
+    constructor(){
+        this.scene = new THREE.Scene();
+        this.camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 550 );
+        this.renderer = new THREE.WebGLRenderer();
+        this.canvas = null;
+    }
 
-function init(){
-    renderer.setSize( window.innerWidth, window.innerHeight );
-    canvas = document.body.appendChild( renderer.domElement );
+    getCanvas(){
+        return this.canvas;
+    }
 
-    scene.background = new THREE.Color( 0xdadada );
+    getCamera(){
+        return this.camera;
+    }
 
-    let light = new THREE.PointLight( 0xffffff, 1.5, 20 );
-    light.position.set( 0, 0, 5 );
-    scene.add( light );
-    light = new THREE.PointLight( 0xffffff, 1, 10 );
-    light.position.set( 0, 5, 0 );
-    scene.add( light );
-    light = new THREE.PointLight( 0xffffff, 1, 10 );
-    light.position.set( 0, -5, 0 );
-    scene.add( light );
-    light = new THREE.PointLight( 0xffffff, 1, 10 );
-    light.position.set( 5, 0, 0 );
-    scene.add( light );
-    light = new THREE.PointLight( 0xffffff, 1, 10 );
-    light.position.set( -5, 0, 0 );
-    scene.add( light );
+    getScene(){
+        return this.scene;
+    }
+
+    getRenderer(){
+        return this.renderer;
+    }
+
+    init(){
+        this.renderer.setSize( window.innerWidth, window.innerHeight );
+        this.canvas = document.body.appendChild( this.renderer.domElement );
+
+        this.scene.background = new THREE.Color( 0xdadada );
+
+        let light = new THREE.PointLight( 0xffffff, 1.5, 20 );
+        light.position.set( 0, 0, 5 );
+        this.scene.add( light );
+        light = new THREE.PointLight( 0xffffff, 1, 10 );
+        light.position.set( 0, 5, 0 );
+        this.scene.add( light );
+        light = new THREE.PointLight( 0xffffff, 1, 10 );
+        light.position.set( 0, -5, 0 );
+        this.scene.add( light );
+        light = new THREE.PointLight( 0xffffff, 1, 10 );
+        light.position.set( 5, 0, 0 );
+        this.scene.add( light );
+        light = new THREE.PointLight( 0xffffff, 1, 10 );
+        light.position.set( -5, 0, 0 );
+        this.scene.add( light );
+    }
 }
 
-function makeCube(x, y, z){
-    let geometry = new THREE.BoxGeometry( 1, 1, 1 );
-    let material = new THREE.MeshPhongMaterial( {color: "white", shininess: 0} );
-    material.vertexColors = THREE.FaceColors;
-    geometry = paintCube(geometry);
-    cube = new THREE.Mesh( geometry, material );
-    cube.position.x = x;
-    cube.position.y = y;
-    cube.position.z = z;
-    return cube;
-}
+class Cuber {
+    makeCube(x, y, z){
+        let geometry = new THREE.BoxGeometry( 1, 1, 1 );
+        let material = new THREE.MeshPhongMaterial( {color: "white", shininess: 0} );
+        material.vertexColors = THREE.FaceColors;
+        geometry = this.paintCube(geometry);
+        let cube = new THREE.Mesh( geometry, material );
+        cube.position.x = x;
+        cube.position.y = y;
+        cube.position.z = z;
+        return cube;
+    }
 
-function makeRubik(){
-    let rubik = new THREE.Group();
-    let currentCube;
-    for(let i = -1; i < 2; i++){
-        for(let j = -1; j < 2; j++){
-            for(let k = -1; k < 2; k++){
-                currentCube = makeCube(i * 1.05, j * 1.05, k * 1.05);
-                rubik.add(currentCube);
+    makeRubik(){
+        let rubik = new THREE.Group();
+        let currentCube;
+        for(let i = -1; i < 2; i++){
+            for(let j = -1; j < 2; j++){
+                for(let k = -1; k < 2; k++){
+                    currentCube = this.makeCube(i * 1.05, j * 1.05, k * 1.05);
+                    rubik.add(currentCube);
+                }
             }
         }
+        return rubik;
     }
-    return rubik;
-}
 
-function paintCube(geometry){
-    for ( let i = 0; i < geometry.faces.length; i += 2 ) {
-        let faceColor = CUBE_COLORS[i / 2];
-        geometry.faces[i].color = faceColor;
-        geometry.faces[i+1].color = faceColor;
+    paintCube(geometry){
+        for ( let i = 0; i < geometry.faces.length; i += 2 ) {
+            let faceColor = CUBE_COLORS[i / 2];
+            geometry.faces[i].color = faceColor;
+            geometry.faces[i+1].color = faceColor;
+        }
+        return geometry;
     }
-    return geometry;
-}
-
-function animate() {
-    requestAnimationFrame( animate );
-    renderer.render( scene, camera );
 }
 
 // MOUSE
-
-let mouseDown = false,
-mouseX = 0,
-mouseY = 0;
-
-function onMouseMove(evt) {
-    if (!mouseDown) {
-        return;
+class Mouser {
+    constructor(rubik){
+        this.mouseDown = false;
+        this.mouseX = 0;
+        this.mouseY = 0;
+        this.rubik = rubik;
     }
 
-    evt.preventDefault();
+    onMouseMove(evt) {
+        if (!this.mouseDown) {
+            return;
+        }
 
-    let deltaX = evt.clientX - mouseX,
-        deltaY = evt.clientY - mouseY;
-    mouseX = evt.clientX;
-    mouseY = evt.clientY;
-    rubik.rotation.x += deltaY / 300;
-    rubik.rotation.y += deltaX / 300;
-}
+        evt.preventDefault();
 
-function onTouchMove(evt){
-    if (!mouseDown || !evt.touches[1]) {
-        return;
+        let deltaX = evt.clientX - this.mouseX,
+            deltaY = evt.clientY - this.mouseY;
+        this.mouseX = evt.clientX;
+        this.mouseY = evt.clientY;
+        this.rubik.rotation.x += deltaY / 300;
+        this.rubik.rotation.y += deltaX / 300;
     }
 
-    evt.preventDefault();
+    onTouchMove(evt){
+        if (!this.mouseDown || !evt.touches[1]) {
+            return;
+        }
 
-    let deltaX = evt.touches[0].clientX - mouseX,
-        deltaY = evt.touches[0].clientY - mouseY;
-    if (rubik.rotation.x > Math.PI / 2 && rubik.rotation.x < Math.PI * 1.5)
-        deltaX *= -1;
-    mouseX = evt.touches[0].clientX;
-    mouseY = evt.touches[0].clientY;
-    rubik.rotation.x += deltaY / 300;
-    rubik.rotation.y += deltaX / 300;
-    console.log(rubik.rotation.x,  rubik.rotation.y);
-    rubik.rotation.x = (rubik.rotation.x + 2 * Math.PI) % (Math.PI * 2);
-    rubik.rotation.y = (rubik.rotation.y + 2 * Math.PI) % (Math.PI * 2);
-}
+        evt.preventDefault();
 
-function onMouseDown(evt) {
-    evt.preventDefault();
+        let deltaX = evt.touches[0].clientX - this.mouseX,
+            deltaY = evt.touches[0].clientY - this.mouseY;
+        if (this.rubik.rotation.x > Math.PI / 2 && this.rubik.rotation.x < Math.PI * 1.5)
+            deltaX *= -1;
+        this.mouseX = evt.touches[0].clientX;
+        this.mouseY = evt.touches[0].clientY;
+        this.rubik.rotation.x += deltaY / 300;
+        this.rubik.rotation.y += deltaX / 300;
+        console.log(this.rubik.rotation.x,  this.rubik.rotation.y);
+        this.rubik.rotation.x = (rubik.rotation.x + 2 * Math.PI) % (Math.PI * 2);
+        this.rubik.rotation.y = (rubik.rotation.y + 2 * Math.PI) % (Math.PI * 2);
+    }
 
-    mouseDown = true;
-    mouseX = evt.clientX || evt.touches[0].clientX;
-    mouseY = evt.clientY || evt.touches[0].clientY;
-}
+    onMouseDown(evt) {
+        evt.preventDefault();
 
-function onMouseUp(evt) {
-    evt.preventDefault();
+        this.mouseDown = true;
+        this.mouseX = evt.clientX || evt.touches[0].clientX;
+        this.mouseY = evt.clientY || evt.touches[0].clientY;
+    }
 
-    mouseDown = false;
-}
+    onMouseUp(evt) {
+        evt.preventDefault();
 
-function addMouseHandler(canvas) {
-    canvas.addEventListener('mousemove', function (e) {
-        onMouseMove(e);
-    }, false);
-    canvas.addEventListener('touchmove', function (e) {
-        onTouchMove(e);
-    }, false);
+        this.mouseDown = false;
+    }
 
-    canvas.addEventListener('mousedown', function (e) {
-        onMouseDown(e);
-    }, false);
-    canvas.addEventListener('touchstart', function (e) {
-        onMouseDown(e);
-    }, false);
+    addMouseHandler(canvas) {
+        let theMouser = this;
+        canvas.addEventListener('mousemove', function (e) {
+            theMouser.onMouseMove(e);
+        }, false);
+        canvas.addEventListener('touchmove', function (e) {
+            theMouser.onTouchMove(e);
+        }, false);
 
-    canvas.addEventListener('mouseup', function (e) {
-        onMouseUp(e);
-    }, false);
-    canvas.addEventListener('touchend', function (e) {
-        onMouseUp(e);
-    }, false);
+        canvas.addEventListener('mousedown', function (e) {
+            theMouser.onMouseDown(e);
+        }, false);
+        canvas.addEventListener('touchstart', function (e) {
+            theMouser.onMouseDown(e);
+        }, false);
+
+        canvas.addEventListener('mouseup', function (e) {
+            theMouser.onMouseUp(e);
+        }, false);
+        canvas.addEventListener('touchend', function (e) {
+            theMouser.onMouseUp(e);
+        }, false);
+    }
 }
 
 // MAIN CODE
 
-init();
+function animate() {
+    requestAnimationFrame( animate );
+    game.getRenderer().render( game.getScene(), game.getCamera() );
+}
 
-camera.position.z = 5;
+let game = new Game();
+let cuber = new Cuber();
 
-let rubik = makeRubik();
-scene.add(rubik);
+let rubik = cuber.makeRubik();
 
-addMouseHandler(canvas);
+let mouser = new Mouser(rubik);
+
+game.init();
+
+mouser.addMouseHandler(game.getCanvas());
+
+game.getCamera().position.z = 5;
+
+game.getScene().add(rubik);
 
 animate();
