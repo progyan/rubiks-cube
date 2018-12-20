@@ -1,10 +1,10 @@
 const CUBE_COLORS = [
-    new THREE.Color( 0xff4500 ), // right
-    new THREE.Color( 0xffa500 ), // left
+    new THREE.Color( 0xea4335 ), // right
+    new THREE.Color( 0xfb7c05 ), // left
     new THREE.Color( 0xffffff ), // top
-    new THREE.Color( 0xffff00 ), // down
-    new THREE.Color( 0x008040 ), // front
-    new THREE.Color( 0x4169e1 ) // back
+    new THREE.Color( 0xfbdc05 ), // down
+    new THREE.Color( 0x148833 ), // front
+    new THREE.Color( 0x4285f4 ) // back
 ];
 
 const DEG_TO_RAD = 0.0174533;
