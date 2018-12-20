@@ -105,7 +105,7 @@ class Rotater {
         let func;
         if(cw)
             rotationToMake = 90 * DEG_TO_RAD;
-        else;
+        else
             rotationToMake = (-90) * DEG_TO_RAD
         
         if(axis == "x")
