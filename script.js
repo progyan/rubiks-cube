@@ -7,6 +7,8 @@ const CUBE_COLORS = [
     new THREE.Color( 0x4169e1 ) // back
 ];
 
+const DEG_TO_RAD = 0.0174533;
+
 class Game {
     constructor(){
         this.scene = new THREE.Scene();
@@ -98,7 +100,28 @@ class Rotater {
     }
 
     rotate(group, axis, cw){
-
+        let dir;
+        let rotationToMake;
+        let func;
+        if(cw)
+            rotationToMake = 90 * DEG_TO_RAD;
+        else;
+            rotationToMake = (-90) * DEG_TO_RAD
+        
+        if(axis == "x")
+            func = () => {return ++group.rotation.x};
+        else if(axis == "y")
+            func = () => {return ++group.rotation.y};
+        else if(axis == "z")
+            func = () => {return ++group.rotation.z};
+        else
+            return;
+        
+        dir = func();
+        
+        while(dir < (dir + rotationToMake)){
+            dir = func();
+        }
     }
 }
 
