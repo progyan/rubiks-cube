@@ -57,11 +57,11 @@ class Game {
 
 class Cuber {
     makeCube(x, y, z){
-        let geometry = new THREE.BoxGeometry( 1, 1, 1 );
+        let geometry = new THREE.BoxGeometry(1, 1, 1);
         let material = new THREE.MeshPhongMaterial( {color: "white", shininess: 0} );
         material.vertexColors = THREE.FaceColors;
         geometry = this.paintCube(geometry);
-        let cube = new THREE.Mesh( geometry, material );
+        let cube = new THREE.Mesh(geometry, material);
         cube.position.x = x;
         cube.position.y = y;
         cube.position.z = z;
@@ -92,7 +92,16 @@ class Cuber {
     }
 }
 
-// MOUSE
+class Rotater {
+    constructor(cubes){
+        this.cubes = cubes;
+    }
+
+    rotate(group, axis, cw){
+
+    }
+}
+
 class Mouser {
     constructor(rubik){
         this.mouseDown = false;
