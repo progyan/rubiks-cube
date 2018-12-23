@@ -106,7 +106,7 @@ class Rotater {
         if(cw)
             rotationToMake = 90 * DEG_TO_RAD;
         else
-            rotationToMake = (-90) * DEG_TO_RAD
+            rotationToMake = (-90) * DEG_TO_RAD;
         
         if(axis == "x")
             func = () => {return ++group.rotation.x};
